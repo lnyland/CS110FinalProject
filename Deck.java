@@ -40,7 +40,7 @@ public class Deck
    // methods ======================================================================
   
    /**
-   Shuffles the deck of cards.
+   Shuffles the deck of cards. Implements Fisher-Yates shuffle.
    */
    public void shuffle()
    {
@@ -88,6 +88,16 @@ public class Deck
    }
    
    /**
+   Return a copy of card at top of deck without altering the deck.
+   @return A Card object - copy of first card in deck.
+   */
+   public Card peekTopCard()
+   {
+      Card newCard = new Card(deck.peek());
+      return newCard;
+   }
+
+   /**
    Get number of cards in deck.
    @return An integer for the number of cards currently in deck.
    */
@@ -95,65 +105,4 @@ public class Deck
    {
       return deck.size();
    }
-
-   
-//    //tester
-//    public static void main(String[] args)
-//    {
-//       Deck d1 = new Deck();
-//       
-//       //display the unshuffled deck
-//       System.out.println("Unshuffled Deck");
-//       for (int i=0; i<d1.getSize(); i++)
-//       {
-//          System.out.println(d1.deck.get(i).toString());
-//       }
-//       //display its size
-//       System.out.println("The current deck size is: " + d1.getSize());
-//       
-//       d1.shuffle();
-//       
-//       //display the shuffled deck
-//       System.out.println("Shuffled Deck");
-//       for (int i=0; i<d1.getSize(); i++)
-//       {
-//          System.out.println(d1.deck.get(i).toString());
-//       }
-//       //display its size
-//       System.out.println("The current deck size is: " + d1.getSize());
-//       
-//       //remove top cards from deck
-//       d1.removeTop();
-//       d1.removeTop();
-//       d1.removeTop();
-//       d1.removeTop();
-//       d1.removeTop();
-//       d1.removeTop();
-//       d1.removeTop();
-//       
-//       //display the deck
-//       System.out.println("Current deck after removing cards from it");
-//       for (int i=0; i<d1.deck.size(); i++)
-//       {
-//          System.out.println(d1.deck.get(i).toString());
-//       }
-//       //display its size
-//       System.out.println("The current deck size is: " + d1.getSize());
-// 
-//       //move cards from top to bottom
-//       d1.returnToBottom(d1.removeTop());
-//       d1.returnToBottom(d1.removeTop());
-//       d1.returnToBottom(d1.removeTop());
-//       d1.returnToBottom(d1.removeTop());
-//       d1.returnToBottom(d1.removeTop());
-//       
-//       //display the deck
-//       System.out.println("Current deck after moving cards around");
-//       for (int i=0; i<d1.deck.size(); i++)
-//       {
-//          System.out.println(d1.deck.get(i).toString());
-//       }
-//       //display its size
-//       System.out.println("The current deck size is: " + d1.getSize());   }
-   
 }

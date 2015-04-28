@@ -28,7 +28,7 @@ public class CardPile
    // methods ======================================================================
    
    /**
-   Shuffles the pile of cards.
+   Shuffles the pile of cards. Implements the Fisher-Yates shuffle.
    */
    public void shuffle()
    {
@@ -48,7 +48,7 @@ public class CardPile
    
    /**
    Remove top card from pile.
-   @return A Card object that was first in the pile
+   @return A Card object copy of Card that was first in the pile
    */
    public Card removeTop()
    {
@@ -85,8 +85,8 @@ public class CardPile
    }
    
    /**
-   Return a copy of card at top of pile.
-   @param card A Card object to be placed at the current first index of the pile
+   Return a copy of card at top of pile without altering the pile.
+   @param card A Card object copy of Card that was first in the pile
    */
    public Card peekTopCard()
    {
@@ -101,125 +101,5 @@ public class CardPile
    public int getSize()
    {
       return pile.size();
-   }
-
-
-   // // tester
-//    public static void main(String[] args)
-//    {
-//       //number of cards in a deck of std playing cards
-//       final int NUM_CARDS = 52;
-//       
-//       // a deck of cards to be used to play war
-//       Deck d1 = new Deck();
-//       d1.shuffle();
-//       
-//       // the down card piles for the 2 players
-//       CardPile p1 = new CardPile();
-//       CardPile p2 = new CardPile();
-//       
-//       //deal the cards to the players
-//       for (int i=0; i<(NUM_CARDS/2); i++)
-//       {
-//          p1.returnToBottom(d1.removeTop());
-//          p2.returnToBottom(d1.removeTop());
-//       }
-//       
-//       //display the card piles
-//       System.out.println("Pile 1");
-//       for (int i=0; i<p1.getSize(); i++)
-//       {
-//          System.out.println(p1.pile.get(i).toString());
-//       }
-//       System.out.println("Pile 1 size: " + p1.getSize());
-//       System.out.println("Pile 2");
-//       for (int i=0; i<p2.getSize(); i++)
-//       {
-//          System.out.println(p2.pile.get(i).toString());
-//       }
-//       System.out.println("Pile 2 size: " + p2.getSize());
-//       
-//       //display deck size
-//       System.out.println("Deck size: " + d1.getSize());
-//       
-//       // the up card piles for the 2 players
-//       CardPile p3 = new CardPile();
-//       CardPile p4 = new CardPile();
-//       
-//       //flip cards from 2 piles and compare
-//       System.out.println("Pile 1: \t\tPile 2: ");
-//       do
-//       {
-//          //put top down card as up card in a new pile
-//          p3.returnToBottom(p1.removeTop());
-//          p4.returnToBottom(p2.removeTop());
-//          
-//          if(p3.pile.peek().equals(p4.pile.peek()))
-//          {
-//             System.out.println(p3.pile.peek() + "\t=\t" + p4.pile.peek());
-//             p3.returnToBottom(p1.removeTop());
-//             p4.returnToBottom(p2.removeTop()); 
-//             
-//             while(p3.pile.peekLast().equals(p4.pile.peekLast()));
-//             {
-//                p3.returnToBottom(p1.removeTop());
-//                p4.returnToBottom(p2.removeTop()); 
-//                System.out.println(p3.pile.peek() + "\t=\t" + p4.pile.peek()); 
-//             }
-//             
-//             if(p3.pile.peekLast().greaterThan(p4.pile.peekLast()))
-//             {
-//                System.out.println(p3.pile.peekLast() + "\t>\t" + p4.pile.peekLast());
-//                int sz = p3.getSize();
-//                for (int i=0; i<sz; i++)
-//                {
-//                   p3.returnToBottom(p4.removeTop());
-//                }
-//                p3.shuffle();
-//                for (int i=0; i<sz; i++)
-//                {
-//                   p1.returnToBottom(p3.removeTop());
-//                }
-//             }
-//             else 
-//             {
-//                System.out.println(p4.pile.peekLast() + "\t<\t" + p3.pile.peekLast());
-//                int sz = p4.getSize();
-//                for (int i=0; i<sz; i++)
-//                {
-//                   p4.returnToBottom(p3.removeTop());
-//                }
-//                p4.shuffle();
-//                for (int i=0; i<sz; i++)
-//                {
-//                   p2.returnToBottom(p4.removeTop());
-//                }
-//             }
-//          }
-//          else if(p3.pile.peek().greaterThan(p4.pile.peek()))
-//          {
-//             System.out.println(p3.pile.peek() + "\t>\t" + p4.pile.peek());
-//             p3.returnToBottom(p4.removeTop());
-//             p3.shuffle();
-//             p1.returnToBottom(p3.removeTop());
-//             p1.returnToBottom(p3.removeTop());
-//          }
-//          else
-//          {
-//             System.out.println(p3.pile.peek() + "\t<\t" + p4.pile.peek());
-//             p4.returnToBottom(p3.removeTop());
-//             p4.shuffle();
-//             p2.returnToBottom(p4.removeTop());
-//             p2.returnToBottom(p4.removeTop());            
-//          }
-//          
-//          //display pile sizes
-//          System.out.println("Pile 1 size: " + p1.getSize());
-//          System.out.println("Pile 2 size: " + p2.getSize());   
-//       }while((p1.getSize() > 0) && (p2.getSize() > 0));
-// 
-//       
-//    }
-
-   
+   }   
 }

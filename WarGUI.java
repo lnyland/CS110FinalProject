@@ -28,7 +28,6 @@ public class WarGUI extends JFrame
    
    private JButton button1;            // holds a button object for dealing cards
    private JButton button2;            // holds a button object for flipping cards
-   private JButton button3;            // holds a button object for auto flipping cards
    
    private JLabel player1;             // holds text for "Player 1"
    private JLabel player2;             // holds text for "Player 2"         
@@ -37,7 +36,8 @@ public class WarGUI extends JFrame
    private JLabel downCards2;          // holds text for player 2, # cards in down pile
    private JLabel upCards1;            // holds text for player 1, # cards in up pile
    private JLabel upCards2;            // holds text for player 2, # cards in up pile
-   
+   private JLabel upCard1;
+   private JLabel upCard2;
    private JLabel player1Status;       // holds the status of a play for player 1
    private JLabel player2Status;       // holds the status of a play for player 2
    
@@ -59,8 +59,7 @@ public class WarGUI extends JFrame
    
    private final String DEAL = "DEAL";                // title for DEAL button
    private final String FLIP = "FLIP";                // title for FLIP button
-   private final String AUTOFLIP = "AUTO FLIP";       // title for AUTOFLIP button
-   
+     
    private final String UPCARDS = "Up Cards: ";       // text before number of up cards displayed
    private final String DOWNCARDS = "Down Cards: ";   // text before number of down cards displayed
    
@@ -114,6 +113,7 @@ public class WarGUI extends JFrame
       }
         
       // methods ===================================================================   
+     
       /*****************************************************************************
          The buildPanel1 method adds its components
       **/
@@ -127,9 +127,9 @@ public class WarGUI extends JFrame
          
          // add player 1 # cards up message to panel
          panel1.add(upCards1);
-      
+         
          // add panel to content pane
-         add(panel1); 
+         add(panel1);  
       }
       
       /*****************************************************************************
@@ -142,7 +142,7 @@ public class WarGUI extends JFrame
          
          // instantiate the up card pile for player 1
          u1 = new CardPile();
-            
+         
          // add panel to content pane
          add(panel2); 
       }
@@ -391,7 +391,7 @@ public class WarGUI extends JFrame
       
       /*****************************************************************************
          Private inner class that handles the event when the user clicks
-         the FLIP or AUTOFLIP button
+         the FLIP button
       **/
       private class FlipButtonListener implements ActionListener
       {
@@ -401,23 +401,25 @@ public class WarGUI extends JFrame
             
             do
             {
-               if(d1.getSize() == 0)
+               if(d1.getSize() == 0) // player 1 loses game
                {
                   player1Status.setText(LOSE);
                   player2Status.setText(GWIN);
                   
                   // remove the FLIP button
                   panel12.removeAll();
+                  pack();
                }
-               else if(d2.getSize() == 0)
+               else if(d2.getSize() == 0) // player 2 loses game
                {
                   player1Status.setText(GWIN);
                   player2Status.setText(LOSE);
                   
                   // remove the FLIP button
                   panel12.removeAll();
+                  pack();
                }
-               else
+               else // a player has yet to win
                {           
                   //put top down card as up card in a new pile
                   u1.returnToTop(d1.removeTop());
@@ -427,10 +429,14 @@ public class WarGUI extends JFrame
                   panel2.removeAll();
                   String theTopUpCard1 = u1.peekTopCard().toString();
                   upCardPic1 = new ImageIcon("cardFacades/" + theTopUpCard1 + ".jpg");
-                  panel2.add(new JLabel(upCardPic1));
+                  upCard1 = new JLabel(upCardPic1);
+                  panel2.add(upCard1);
+                  
+                  panel3.removeAll();
                   String theTopUpCard2 = u2.peekTopCard().toString();
                   upCardPic2 = new ImageIcon("cardFacades/" + theTopUpCard2 + ".jpg");
-                  panel3.removeAll();
+                  upCard2 = new JLabel(upCardPic2);
+                  panel3.add(upCard2);
                   panel3.add(new JLabel(upCardPic2));
                   
                   // get the card pile sizes
@@ -446,13 +452,21 @@ public class WarGUI extends JFrame
                   upCards2.setText(UPCARDS + " " + numUpCards2);
                   
                   // compare cards in up piles
-                  if(u1.peekTopCard().equals(u2.peekTopCard()))
+                  if(u1.peekTopCard().equals(u2.peekTopCard())) // a tie
                   {  
                      // establish the status message for each player
                      player1Status.setText(HTIE);
                      player2Status.setText(HTIE);
+                     
+                     // each player burns a card to bottom of up pile before next flip
+                     u1.returnToBottom(d1.removeTop());
+                     //u1.returnToBottom(d1.removeTop());
+                     //u1.returnToBottom(d1.removeTop());
+                     u2.returnToBottom(d2.removeTop()); 
+                     //u2.returnToBottom(d2.removeTop());
+                     //u2.returnToBottom(d2.removeTop());                    
                   }
-                  else if(u1.peekTopCard().greaterThan(u2.peekTopCard()))
+                  else if(u1.peekTopCard().greaterThan(u2.peekTopCard())) // player 1 won hand
                   {
                      // establish the status message for each player
                      player1Status.setText(HWIN);
@@ -466,7 +480,7 @@ public class WarGUI extends JFrame
                         d1.returnToBottom(u2.removeTop());
                      }
                   }
-                  else
+                  else //player 2 won hand
                   {
                      // establish the status message for each player
                      player2Status.setText(HWIN);
